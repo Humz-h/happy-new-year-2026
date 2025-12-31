@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year 2026 🎆</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #1a0033 0%, #0a0011 50%, #000 100%);
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== STARS ===== */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(255,255,255,0.8), 0 0 8px rgba(255,255,255,0.5);
+    z-index: 1;
+    animation: twinkle 3s infinite;
+}
+
+.star.small {
+    width: 1px;
+    height: 1px;
+    box-shadow: 0 0 2px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.5);
+}
+
+.star.medium {
+    width: 2px;
+    height: 2px;
+    box-shadow: 0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.3);
+}
+
+.star.large {
+    width: 3px;
+    height: 3px;
+    box-shadow: 0 0 6px rgba(255,255,255,1), 0 0 12px rgba(255,255,255,0.7), 0 0 18px rgba(255,255,255,0.4);
+}
+
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+/* ===== COUNTDOWN ===== */
+#countdown {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 16px;
+    padding: 16px 26px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+#countdown.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+}
+.time-box { text-align: center; min-width: 90px; }
+.time-separator {
+    font-size: 58px;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+}
+.number { font-size: 58px; font-weight: 800; }
+.label { font-size: 13px; opacity: .7; }
+
+/* ===== BUTTON ===== */
+#testBtn {
+    display: none;
+}
+
+#testBtn:hover {
+    box-shadow: 0 15px 60px rgba(255,170,0,1), 0 0 50px rgba(255,200,0,.8), 0 0 90px rgba(255,150,0,.6);
+    transform: translateX(-50%) scale(1.05);
+}
+
+@keyframes buttonGlow {
+    0% {
+        box-shadow: 0 10px 40px rgba(255,170,0,.8), 0 0 30px rgba(255,200,0,.6), 0 0 60px rgba(255,150,0,.4);
+    }
+    100% {
+        box-shadow: 0 15px 50px rgba(255,170,0,1), 0 0 40px rgba(255,200,0,.8), 0 0 80px rgba(255,150,0,.6);
+    }
+}
+
+/* ===== YEAR ===== */
+#year {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    font-size: 120px;
+    font-weight: 900;
+    z-index: 10;
+    background: linear-gradient(180deg,#fff,#ffd700,#ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+    filter: drop-shadow(0 0 10px rgba(255,200,0,0.4));
+    animation: yearGlow 3s ease-in-out infinite alternate;
+    transition: top 0s, transform 0s;
+}
+
+@keyframes yearGlow {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(255,200,0,0.4)) brightness(1);
+        text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(255,200,0,0.6)) brightness(1.1);
+        text-shadow: 0 0 70px rgba(255,200,0,1), 0 0 45px rgba(255,150,0,0.8), 0 0 25px rgba(255,200,0,0.7);
+    }
+}
+
+#digit {
+    display: inline-block;
+    background: linear-gradient(180deg,#fff,#ffd700,#ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+    filter: drop-shadow(0 0 10px rgba(255,200,0,0.4));
+}
+
+.digit-highlight {
+    text-shadow: 0 0 70px rgba(255,200,0,1), 0 0 45px rgba(255,150,0,0.8), 0 0 25px rgba(255,200,0,0.7);
+    filter: brightness(1.1) drop-shadow(0 0 20px rgba(255,200,0,0.6));
+    animation: digitPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes digitPulse {
+    0% {
+        filter: brightness(1.1) drop-shadow(0 0 20px rgba(255,200,0,0.6));
+    }
+    100% {
+        filter: brightness(1.15) drop-shadow(0 0 30px rgba(255,200,0,0.8));
+    }
+}
+
+.year-zoom {
+    animation: yearPulse 1.2s ease-out;
+}
+
+@keyframes yearPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+.year-fly-up {
+    animation: flyUp 3s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes flyUp {
+    from {
+        top: 45%;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        top: 8%;
+        transform: translateX(0) scale(0.7);
+    }
+}
+
+#greeting {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    z-index: 10;
+    opacity: 0;
+    background: linear-gradient(180deg,#fff,#ffd700,#ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+    filter: drop-shadow(0 0 10px rgba(255,200,0,0.4));
+}
+
+#greeting.show {
+    animation: greetingFlyUp 3s cubic-bezier(.2,.8,.2,1) forwards, greetingGlow 3s ease-in-out infinite alternate 3s;
+}
+
+@keyframes greetingGlow {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(255,200,0,0.4)) brightness(1);
+        text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(255,200,0,0.6)) brightness(1.1);
+        text-shadow: 0 0 70px rgba(255,200,0,1), 0 0 45px rgba(255,150,0,0.8), 0 0 25px rgba(255,200,0,0.7);
+    }
+}
+
+#wish {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    font-size: clamp(18px, 3vw, 32px);
+    font-weight: 500;
+    z-index: 10;
+    opacity: 0;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    text-shadow: 0 0 20px rgba(255,200,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
+    min-height: 1.6em;
+}
+
+#wish::after {
+    content: '|';
+    animation: blink 1s infinite;
+    opacity: 1;
+}
+
+#wish.typing::after {
+    opacity: 1;
+}
+
+#wish.complete::after {
+    opacity: 0;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes greetingFlyUp {
+    from {
+        opacity: 0;
+        top: 50%;
+        transform: translate(-50%, 0) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        top: 22%;
+        transform: translate(-50%, 0) scale(1);
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+.fly-out {
+    animation: flyOut 3s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes flyOut {
+    to {
+        transform: translateY(-240px) scale(.4);
+        opacity: 0;
+    }
+}
+
+.fly-in {
+    animation: flyIn 3.5s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes flyIn {
+    from {
+        transform: translateY(260px) scale(.4);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== AUDIO ===== */
+audio {
+    display: none;
+}
+
+/* ===== CANVAS ===== */
+canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="countdown">
+    <div class="time-box"><div class="number" id="hours">00</div><div class="label">Giờ</div></div>
+    <span class="time-separator">:</span>
+    <div class="time-box"><div class="number" id="minutes">00</div><div class="label">Phút</div></div>
+    <span class="time-separator">:</span>
+    <div class="time-box"><div class="number" id="seconds">00</div><div class="label">Giây</div></div>
+</div>
+
+<button id="testBtn">BẮT ĐẦU</button>
+
+<div id="year">202<span id="digit">5</span></div>
+<div id="greeting">Happy New Year</div>
+<div id="wish">Chúc mọi người một năm mới tràn đầy niềm vui, hạnh phúc và thành công. Mong những ước mơ của mọi người sẽ thành hiện thực và mọi điều tốt đẹp nhất sẽ đến trong năm 2026 nhé!</div>
+<audio id="newYearMusic" loop preload="auto">
+  <source src="YTSave%20(mp3cut.net).m4a" type="audio/mp4">
+  <source src="YTSave (mp3cut.net).m4a" type="audio/mp4">
+</audio>
+<canvas id="fireworks"></canvas>
+
+<script>
+/* ===== STARS ===== */
+for(let i=0;i<300;i++){
+  const s=document.createElement('div');
+  const size=Math.random();
+  if(size<0.5) s.className='star small';
+  else if(size<0.8) s.className='star medium';
+  else s.className='star large';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*3+'s';
+  s.style.animationDuration=(2+Math.random()*2)+'s';
+  document.body.appendChild(s);
+}
+
+/* ===== COUNTDOWN ===== */
+const h=document.getElementById('hours'),
+m=document.getElementById('minutes'),
+s=document.getElementById('seconds'),
+countdown=document.getElementById('countdown'),
+digit=document.getElementById('digit'),
+btn=document.getElementById('testBtn'),
+music=document.getElementById('newYearMusic');
+
+if(music){
+  const audioFiles=[
+    'YTSave (mp3cut.net).m4a',
+    encodeURIComponent('YTSave (mp3cut.net).m4a'),
+    'YTSave%20(mp3cut.net).m4a'
+  ];
+  let currentIndex=0;
+  function tryLoadAudio(){
+    if(currentIndex>=audioFiles.length) return;
+    music.src=audioFiles[currentIndex];
+    music.load();
+  }
+  music.addEventListener('error',function(e){
+    console.log('Error loading:',audioFiles[currentIndex]);
+    currentIndex++;
+    if(currentIndex<audioFiles.length){
+      tryLoadAudio();
+    }
+  });
+  music.addEventListener('canplay',function(){
+    console.log('Audio ready:',music.src);
+  });
+  tryLoadAudio();
+  
+  let audioUnlocked=false;
+  function unlockAudio(){
+    if(!audioUnlocked&&music.paused){
+      music.play().then(()=>{
+        music.pause();
+        music.currentTime=0;
+        audioUnlocked=true;
+      }).catch(()=>{});
+    }
+  }
+  document.addEventListener('click',unlockAudio,{once:true});
+  document.addEventListener('touchstart',unlockAudio,{once:true});
+  document.addEventListener('keydown',unlockAudio,{once:true});
+  
+  window.unlockAudioForMusic=unlockAudio;
+}
+
+let finished=false;
+
+function update(){
+  const now=new Date();
+  const ny=new Date(now.getFullYear()+1,0,1);
+  const t=Math.max(0,Math.floor((ny-now)/1000));
+  if(t<=0){ 
+    if(window.unlockAudioForMusic){
+      window.unlockAudioForMusic();
+    }
+    start(); 
+    return; 
+  }
+  h.textContent=String(Math.floor(t/3600)).padStart(2,'0');
+  m.textContent=String(Math.floor(t%3600/60)).padStart(2,'0');
+  s.textContent=String(t%60).padStart(2,'0');
+}
+
+const timer=setInterval(update,1000);
+update();
+
+
+function start(){
+  if(finished) return;
+  finished=true;
+  countdown.classList.add('hide');
+  if(music){
+    music.volume=0.7;
+    music.currentTime=0;
+    function playMusic(){
+      const playPromise=music.play();
+      if(playPromise!==undefined){
+        playPromise.then(()=>{
+          console.log('Music playing successfully');
+        }).catch(error=>{
+          console.log('Audio play failed:',error);
+          setTimeout(()=>{
+            music.load();
+            playMusic();
+          },500);
+        });
+      }
+    }
+    if(music.readyState>=2){
+      playMusic();
+    }else{
+      music.addEventListener('canplaythrough',playMusic,{once:true});
+      music.load();
+    }
+  }
+  startFireworks();
+  animateYear();
+}
+
+/* ===== YEAR CHANGE ===== */
+function animateYear(){
+  digit.classList.add('fly-out');
+
+  setTimeout(()=>{
+    digit.textContent='6';
+    digit.classList.remove('fly-out');
+    digit.classList.add('fly-in');
+    const yearEl = document.getElementById('year');
+    yearEl.classList.add('year-zoom');
+    digit.classList.add('digit-highlight');
+    setTimeout(()=>{
+      yearEl.classList.remove('year-zoom');
+      setTimeout(()=>{
+        yearEl.style.animation='flyUp 3s cubic-bezier(.2,.8,.2,1) forwards';
+        yearEl.classList.add('year-fly-up');
+        setTimeout(()=>{
+          const greeting = document.getElementById('greeting');
+          greeting.classList.add('show');
+          setTimeout(()=>{
+            const wish = document.getElementById('wish');
+            const fullText = wish.textContent;
+            wish.textContent = '';
+            wish.style.opacity = '1';
+            wish.classList.add('typing');
+            let index = 0;
+            function typeChar() {
+              if (index < fullText.length) {
+                wish.textContent = fullText.substring(0, index + 1);
+                index++;
+                setTimeout(typeChar, 50);
+              } else {
+                wish.classList.remove('typing');
+                wish.classList.add('complete');
+              }
+            }
+            typeChar();
+          }, 2000);
+        }, 1500);
+      }, 800);
+    }, 1200);
+  }, 3000);
+}
+
+/* ===== FIREWORKS (ĐẸP HƠN) ===== */
+const c=document.getElementById('fireworks'),
+ctx=c.getContext('2d');
+c.width=innerWidth; c.height=innerHeight;
+
+let particles=[];
+
+function Firework(){
+  this.x=Math.random()*c.width;
+  this.y=c.height;
+  this.t=Math.random()*c.height/2;
+  this.vy=8;
+  this.exploded=false;
+  const hue=Math.random()*360;
+  this.color=`hsl(${hue},100%,65%)`;
+  this.color2=`hsl(${(hue+60)%360},100%,65%)`;
+  this.trail=[];
+}
+
+function Particle(x,y,colors){
+  this.x=x; this.y=y;
+  const angle=Math.random()*Math.PI*2;
+  const speed=Math.random()*10+5;
+  this.vx=Math.cos(angle)*speed;
+  this.vy=Math.sin(angle)*speed;
+  this.life=100;
+  this.maxLife=100;
+  this.color=colors[Math.floor(Math.random()*colors.length)];
+  this.size=Math.random()*4+2;
+  this.gravity=0.1;
+}
+
+let fireworks=[];
+
+function startFireworks(){
+  setInterval(()=>fireworks.push(new Firework()),350);
+}
+
+function draw(){
+  ctx.fillStyle='rgba(0,0,0,.2)';
+  ctx.fillRect(0,0,c.width,c.height);
+
+  fireworks.forEach((f,i)=>{
+    if(!f.exploded){
+      f.trail.push({x:f.x,y:f.y});
+      if(f.trail.length>5) f.trail.shift();
+      
+      if(f.trail.length>1){
+        const gradient=ctx.createLinearGradient(f.trail[0].x,f.trail[0].y,f.x,f.y);
+        gradient.addColorStop(0,f.color.replace('65%','40%'));
+        gradient.addColorStop(1,f.color);
+        ctx.strokeStyle=gradient;
+        ctx.lineWidth=2.5;
+        ctx.lineCap='round';
+        ctx.shadowBlur=6;
+        ctx.shadowColor=f.color;
+        ctx.beginPath();
+        ctx.moveTo(f.trail[0].x,f.trail[0].y);
+        for(let j=1;j<f.trail.length;j++){
+          ctx.lineTo(f.trail[j].x,f.trail[j].y);
+        }
+        ctx.stroke();
+        ctx.shadowBlur=0;
+      }
+      
+      const gradient=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,3);
+      gradient.addColorStop(0,f.color);
+      gradient.addColorStop(0.5,f.color.replace('65%','75%'));
+      gradient.addColorStop(1,f.color.replace('65%','30%'));
+      ctx.fillStyle=gradient;
+      ctx.shadowBlur=12;
+      ctx.shadowColor=f.color;
+      ctx.beginPath();
+      ctx.arc(f.x,f.y,3,0,Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur=0;
+      
+      f.y-=f.vy;
+      if(f.y<=f.t){
+        f.exploded=true;
+        const colors=[f.color,f.color2];
+        for(let j=0;j<100;j++)
+          particles.push(new Particle(f.x,f.y,colors));
+        fireworks.splice(i,1);
+      }
+    }
+  });
+
+  particles.forEach((p,i)=>{
+    const alpha=p.life/p.maxLife;
+    const gradient=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size*alpha);
+    gradient.addColorStop(0,p.color);
+    gradient.addColorStop(0.5,p.color.replace('65%','75%'));
+    gradient.addColorStop(1,p.color.replace('65%','40%'));
+    ctx.fillStyle=gradient;
+    ctx.globalAlpha=alpha;
+    ctx.shadowBlur=8*alpha;
+    ctx.shadowColor=p.color;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size*alpha,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha=1;
+    ctx.shadowBlur=0;
+    p.x+=p.vx; p.y+=p.vy;
+    p.vy+=p.gravity;
+    p.vx*=0.98;
+    p.vy*=0.98;
+    p.life--;
+    if(p.life<=0) particles.splice(i,1);
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
