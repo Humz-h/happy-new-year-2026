@@ -119,20 +119,20 @@ html, body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
-    filter: drop-shadow(0 0 10px rgba(255,200,0,0.4));
+    text-shadow: 0 0 30px rgba(255,200,0,0.3), 0 0 20px rgba(255,150,0,0.2), 0 0 10px rgba(255,200,0,0.2);
+    filter: drop-shadow(0 0 5px rgba(255,200,0,0.2));
     animation: yearGlow 3s ease-in-out infinite alternate;
     transition: top 0s, transform 0s;
 }
 
 @keyframes yearGlow {
     0% {
-        filter: drop-shadow(0 0 10px rgba(255,200,0,0.4)) brightness(1);
-        text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
+        filter: drop-shadow(0 0 5px rgba(255,200,0,0.2)) brightness(1);
+        text-shadow: 0 0 30px rgba(255,200,0,0.3), 0 0 20px rgba(255,150,0,0.2), 0 0 10px rgba(255,200,0,0.2);
     }
     100% {
-        filter: drop-shadow(0 0 20px rgba(255,200,0,0.6)) brightness(1.1);
-        text-shadow: 0 0 70px rgba(255,200,0,1), 0 0 45px rgba(255,150,0,0.8), 0 0 25px rgba(255,200,0,0.7);
+        filter: drop-shadow(0 0 10px rgba(255,200,0,0.3)) brightness(1.05);
+        text-shadow: 0 0 40px rgba(255,200,0,0.4), 0 0 25px rgba(255,150,0,0.3), 0 0 15px rgba(255,200,0,0.25);
     }
 }
 
@@ -142,22 +142,22 @@ html, body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 50px rgba(255,200,0,0.8), 0 0 30px rgba(255,150,0,0.6), 0 0 15px rgba(255,200,0,0.5);
-    filter: drop-shadow(0 0 10px rgba(255,200,0,0.4));
+    text-shadow: 0 0 30px rgba(255,200,0,0.3), 0 0 20px rgba(255,150,0,0.2), 0 0 10px rgba(255,200,0,0.2);
+    filter: drop-shadow(0 0 5px rgba(255,200,0,0.2));
 }
 
 .digit-highlight {
-    text-shadow: 0 0 70px rgba(255,200,0,1), 0 0 45px rgba(255,150,0,0.8), 0 0 25px rgba(255,200,0,0.7);
-    filter: brightness(1.1) drop-shadow(0 0 20px rgba(255,200,0,0.6));
+    text-shadow: 0 0 40px rgba(255,200,0,0.4), 0 0 25px rgba(255,150,0,0.3), 0 0 15px rgba(255,200,0,0.25);
+    filter: brightness(1.05) drop-shadow(0 0 10px rgba(255,200,0,0.3));
     animation: digitPulse 2s ease-in-out infinite alternate;
 }
 
 @keyframes digitPulse {
     0% {
-        filter: brightness(1.1) drop-shadow(0 0 20px rgba(255,200,0,0.6));
+        filter: brightness(1.05) drop-shadow(0 0 10px rgba(255,200,0,0.3));
     }
     100% {
-        filter: brightness(1.15) drop-shadow(0 0 30px rgba(255,200,0,0.8));
+        filter: brightness(1.08) drop-shadow(0 0 15px rgba(255,200,0,0.35));
     }
 }
 
@@ -396,21 +396,20 @@ if(music){
 }
 
 let finished=false;
+let countdownTime=30;
 
 function update(){
-  const now=new Date();
-  const ny=new Date(now.getFullYear()+1,0,1);
-  const t=Math.max(0,Math.floor((ny-now)/1000));
-  if(t<=0){ 
+  if(countdownTime<=0){ 
     if(window.unlockAudioForMusic){
       window.unlockAudioForMusic();
     }
     start(); 
     return; 
   }
-  h.textContent=String(Math.floor(t/3600)).padStart(2,'0');
-  m.textContent=String(Math.floor(t%3600/60)).padStart(2,'0');
-  s.textContent=String(t%60).padStart(2,'0');
+  h.textContent='00';
+  m.textContent=String(Math.floor(countdownTime/60)).padStart(2,'0');
+  s.textContent=String(countdownTime%60).padStart(2,'0');
+  countdownTime--;
 }
 
 const timer=setInterval(update,1000);
@@ -422,6 +421,9 @@ function start(){
   finished=true;
   countdown.classList.add('hide');
   if(music){
+    if(window.unlockAudioForMusic){
+      window.unlockAudioForMusic();
+    }
     music.volume=0.7;
     music.currentTime=0;
     function playMusic(){
@@ -438,12 +440,14 @@ function start(){
         });
       }
     }
-    if(music.readyState>=2){
-      playMusic();
-    }else{
-      music.addEventListener('canplaythrough',playMusic,{once:true});
-      music.load();
-    }
+    setTimeout(()=>{
+      if(music.readyState>=2){
+        playMusic();
+      }else{
+        music.addEventListener('canplaythrough',playMusic,{once:true});
+        music.load();
+      }
+    },100);
   }
   startFireworks();
   animateYear();
@@ -528,7 +532,11 @@ function Particle(x,y,colors){
 let fireworks=[];
 
 function startFireworks(){
-  setInterval(()=>fireworks.push(new Firework()),350);
+  setInterval(()=>{
+    if(fireworks.length<5){
+      fireworks.push(new Firework());
+    }
+  },1000);
 }
 
 function draw(){
@@ -574,7 +582,7 @@ function draw(){
       if(f.y<=f.t){
         f.exploded=true;
         const colors=[f.color,f.color2];
-        for(let j=0;j<100;j++)
+        for(let j=0;j<50;j++)
           particles.push(new Particle(f.x,f.y,colors));
         fireworks.splice(i,1);
       }
@@ -610,4 +618,5 @@ draw();
 </script>
 </body>
 </html>
+
 
